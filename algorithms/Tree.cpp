@@ -90,7 +90,6 @@ string join(const vector<string> &items, const string separator = ", ") {
 vector<vector<Node *>> level_order_traversal() {
         
     DFSQueue<Node *> Q;
-    int level = 0;
     Q.enqueue(root, level);
 
     while ( ! Q.empty() ) {
@@ -99,7 +98,7 @@ vector<vector<Node *>> level_order_traversal() {
         auto nodes = children(ptr);
 
         for (Node *child : nodes) 
-            Q.enqueue(child, level);
+            Q.enqueue(child, ptr);
     }
 
     return Q.levels;
@@ -116,11 +115,14 @@ struct DFSQueue{
     Map<Node *, int> distance;
     vector<vector<Data>> levels;
 
-    void enqueue(Data data, int level) {
+    void enqueue(Data data, Data ancestor) {
         
+        int level = distance[ancestor] + 1;
+
         if ( level < levels.size() )
             levels.push_back(vector<Data>());
 
+        distance[data] = level;
         Q.push(data);
         levels[level].push_back(data);    
     }
