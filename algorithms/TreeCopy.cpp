@@ -86,24 +86,6 @@ string join(const vector<string> &items, const string separator = ", ") {
     return oss.str();
 }
 
-
-vector<vector<Node *>> level_order_traversal() {
-        
-    DFSQueue<Node *> Q;
-    Q.enqueue(root, level);
-
-    while ( ! Q.empty() ) {
-        Node *ptr = Q.dequeue();
-
-        auto nodes = children(ptr);
-
-        for (Node *child : nodes) 
-            Q.enqueue(child, ptr);
-    }
-
-    return Q.levels;
-}
-
 template <class Data>
 struct DFSQueue{
     /**

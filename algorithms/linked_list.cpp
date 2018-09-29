@@ -1,4 +1,4 @@
-7#include <vector>
+#include <vector>
 #include <iostream>
 #include <initializer_list>
 using namespace std;
@@ -74,7 +74,7 @@ struct list {
     inline
     T front() { 
         if(head == nullptr)
-            cerr << "HEAD NULL") 
+            cerr << "HEAD NULL"; 
         return head->info; 
     }
 
