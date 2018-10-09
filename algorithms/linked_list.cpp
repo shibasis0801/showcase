@@ -148,6 +148,14 @@ struct list {
         delete temp;
     }
     
+    int size() {
+        int count = 0;
+        for_each([&](T data) -> void {
+            ++count;
+        });
+        return count;
+    }
+
     inline bool empty() { return head == tail && head == nullptr; }
 };
 
@@ -165,17 +173,26 @@ int main() {
     
     auto is_even = [=](int i) -> bool { return i % 2 == 0; };
     auto square  = [=](int i) { return i * i; };
-    auto print   = [=](int i) -> void { cout << i << '\n'; };
+    auto print   = [=](int i) -> void { cout << i << ", "; };
     
     auto remove_from_t  = [&](int i) -> void { t.remove(i); };
 
+    cout << "Size = " << t.size() << '\n';
     
     t.filter(is_even).map(square).for_each(print);
     
+    cout << endl;
+
     t.filter(is_even).for_each(remove_from_t);
     
     t.for_each(print);
 
+    cout << endl;
+
+    cout << "Size = " << t.size() << '\n';
+
     list<int> x = {1, 2, 3, 4, 5};
     x.for_each(print);
+
+    cout << endl;
 }
