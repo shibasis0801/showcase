@@ -1,30 +1,7 @@
 #include <bits/stdc++.h>
 
-typedef unsigned int uint;
-typedef unsigned long long ulong_uint;
-
-#define repeat(i, n) for (long_uint i = 0; i < n; ++i)
-
-using namespace std;
-
-struct printer { 
-    string separator = " ";
-    
-    printer() {}
-    printer(string separator): separator(separator) 
-    {}
-
-    template<class... T>
-    void operator()(T... args) {
-        ((cout << args << separator), ...);
-    }
-
-} print;
-template<class... T>
-void println(const T&... args) {
-    print(args...);
-    cout << '\n';
-}
+#include "../library/printer.hpp"
+#include "../library/range.hpp"
 
 decltype(auto)
 return_tuple(int i) {
@@ -58,85 +35,6 @@ create_map() {
 
     return family;
 }
-
-/*
-template <class T>
-vector<T> input_vector(int n = -1, istream &is = cin) {
-
-    vector<T>input;
-    if (n != -1) {
-        input.resize(n);
-        repeat(i, n) 
-            is >> input[i];
-    }
-    else {
-        while(T data; is >> data) 
-            input.push_back(data);
-    }
-
-    return input;
-}
-*/
-
-struct range {
-    int start, finish;
-    int stride;
-
-    range(int start, int finish) : start(start), finish(finish), stride(1) {}
-    range(int start, int finish, int stride) : start(start), finish(finish), stride(stride) {}
-
-    struct iterator;
-
-    iterator begin() {
-        return iterator(start, stride);
-    }
-
-    iterator end() {
-        return iterator(finish, stride);
-    }
-
-    range step(int stride) {
-        int offset;
-        
-        if (this->stride == 1 || stride == 1)
-            offset = -1;
-
-        return range(start, finish, offset + stride + this->stride);
-    }
-
-    struct iterator {
-        
-        int value;
-        int step = 1;
-        iterator(int value, int step) : value(value), step(step) {}
-
-        iterator &operator=(int element) {
-            value = element;
-            return *this;
-        }
-        
-        // Prefix
-        iterator &operator++() {
-            value += step;
-            return *this;
-        }
-
-        // Postfix
-        iterator operator++(int) {
-            auto temp = iterator(value, this->step);
-            value += step;
-            return temp;
-        }
-
-        bool operator!=(const iterator &iter) {
-            return value < iter.value;
-        }
-
-        int operator*() {
-            return value;
-        }
-    };
-};
 
 int main() {
     auto [square, i, i2, iby2] = return_tuple(5);
