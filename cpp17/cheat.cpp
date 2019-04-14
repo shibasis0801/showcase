@@ -3,8 +3,7 @@
 #include "../library/printer.hpp"
 #include "../library/range.hpp"
 
-decltype(auto)
-return_tuple(int i) {
+decltype(auto) return_tuple(int i) {
     return tuple("square", i, i * i, i / 2.0);
 }
 
@@ -14,8 +13,7 @@ int sum(const T&... numbers) {
 }
  
 template <class K, class V>
-void 
-iterate_map(const map<K, V> &dict) {
+void iterate_map(const map<K, V> &dict) {
     for (auto [name, relation] : dict) {
         println(name, "is my", relation);
     }
@@ -23,6 +21,7 @@ iterate_map(const map<K, V> &dict) {
 
 decltype(auto)
 create_map() {
+
     map<string, string> family;
 
     family.insert(pair("Papu", "Father"));
@@ -34,6 +33,7 @@ create_map() {
     family.insert(pair("Mitul", "Sister"));
 
     return family;
+
 }
 
 int main() {
@@ -46,10 +46,23 @@ int main() {
     auto family = create_map();
     iterate_map(family);
 
-    for (int i : range(1, 10).step(2))
+    println();
+
+    for (int i : range(0, 20).step(2).step(3))
         println(i);
 
-    // Continue this tomorrow.
-    // https://www.fluentcpp.com/2018/06/19/3-simple-c17-features-that-will-make-your-code-simpler/
+    println();
 
+    for (int i : range(1, 10).step(-1).step(-1).step(2).step(2))
+        println(i);
+    
+    println();
+
+    for (int i : range(10, 0))
+        println(i);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+    
+    println();
+
+    for (int i : range(0, 100).step(2).step(8))
+        println(i);
 }

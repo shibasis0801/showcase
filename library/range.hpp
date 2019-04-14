@@ -1,34 +1,40 @@
+#include "printer.hpp"
+
+#ifndef RANGE_HPP
+#define RANGE_HPP
+
 struct range {
-    int start, finish;
+    int start;
+    int stop;
     int stride;
 
-    range(int start, int finish) : start(start), finish(finish), stride(1) {}
-    range(int start, int finish, int stride) : start(start), finish(finish), stride(stride) {}
+    range(int start, int stop) : start(start), stop(stop), stride(1) {}
+
+    range(int start, int stop, int stride) : start(start), stop(stop), stride(stride) {}
 
     struct iterator;
 
     iterator begin() {
-        return iterator(start, stride);
+        return iterator(start, stride, stride > 0);
     }
 
     iterator end() {
-        return iterator(finish, stride);
+        return iterator(stop, stride, stride > 0);
     }
 
     range step(int stride) {
-        int offset;
-        
-        if (this->stride == 1 || stride == 1)
-            offset = -1;
-
-        return range(start, finish, offset + stride + this->stride);
+        if (stride < 0)
+            return range(stop, start, stride * this->stride);
+        else
+            return range(start, stop, stride * this->stride);
     }
 
     struct iterator {
         
         int value;
+        bool increasing = true;
         int step = 1;
-        iterator(int value, int step) : value(value), step(step) {}
+        iterator(int value, int step, bool increasing) : value(value), step(step), increasing(increasing) {}
 
         iterator &operator=(int element) {
             value = element;
@@ -43,13 +49,13 @@ struct range {
 
         // Postfix
         iterator operator++(int) {
-            auto temp = iterator(value, this->step);
+            auto temp = iterator(value, this->step, increasing);
             value += step;
             return temp;
         }
 
         bool operator!=(const iterator &iter) {
-            return value < iter.value;
+            return increasing ? value < iter.value : value > iter.value;
         }
 
         int operator*() {
@@ -57,3 +63,5 @@ struct range {
         }
     };
 };
+
+#endif

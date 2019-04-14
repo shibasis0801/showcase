@@ -1,5 +1,7 @@
-#include <iostream>
-#include <string>
+#ifndef PRINTER_HPP 
+#define PRINTER_HPP
+// Replace this with proper headers
+#include <bits/stdc++.h>
 
 typedef unsigned int uint;
 typedef unsigned long long ulong_uint;
@@ -26,3 +28,4 @@ void println(const T&... args) {
     print(args...);
     cout << '\n';
 }
+#endif
